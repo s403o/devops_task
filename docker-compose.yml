@@ -1,0 +1,64 @@
+version: '3.9'
+
+services:
+  app:
+    image: s403o/flaskapp
+    ports:
+      - "5000:5000"
+    environment:
+      MONGO_URI: "mongodb://mongodb:27017/users"
+      FLASK_ENV: development
+    container_name: flask-app
+    depends_on:
+      - db
+    restart: on-failure
+
+  db:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: users
+    volumes:
+      - mongo-data:/data/db
+    restart: on-failure
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - app
+    restart: on-failure
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    restart: on-failure
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+
+  node-exporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    # ports:
+    #   - "9100:9100"
+    network_mode: host
+    restart: on-failure
+    depends_on:
+      - prometheus
+
+volumes:
+  mongo-data:
+  grafana-data:
