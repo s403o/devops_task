@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: jenkins
+  namespace: jenkins
   labels:
     app.kubernetes.io/name: jenkins
 spec:
@@ -19,7 +20,7 @@ spec:
       containers:
       - name: jenkins
         image: jenkins/jenkins:lts
-        imagePullPolicy: ifNotPresent
+        imagePullPolicy: IfNotPresent
         env:
         - name: JAVA_OPTS
           value: -Djmaster.jenkinsUrl=http://0.0.0.0:9090/jenkins

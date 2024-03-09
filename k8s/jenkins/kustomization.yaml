@@ -8,3 +8,6 @@ resources:
 - service.yaml
 - ingress.yaml
 - namespace.yaml
+- serviceAccount.yaml
+- service.yaml
+- volume.yaml
