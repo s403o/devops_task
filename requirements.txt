@@ -1,4 +1,3 @@
 Flask
 pymongo
 prometheus-flask-exporter
-structlog
