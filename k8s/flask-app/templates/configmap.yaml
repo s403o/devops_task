@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flask-app-config
+data:
+  MONGO_URI: "mongodb://mongodb:27017/users"
+  MONGO_INITDB_DATABASE: "users"
+  GF_SECURITY_ADMIN_PASSWORD: "admin"
+  GF_USERS_ALLOW_SIGN_UP: "false"
+  GF_SERVER_SERVE_FROM_SUB_PATH: "true"
+  GF_SERVER_ROOT_URL: "http://0.0.0.0:9090/grafana"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+
+    scrape_configs:
+      - job_name: 'flaskapp'
+        static_configs:
+          - targets: ['app:5000']
+
+      - job_name: 'prometheus'
+        static_configs:
+          - targets: ['0.0.0.0:9090']
+
+      - job_name: 'node-exporter'
+        static_configs:
+          - targets: ['0.0.0.0:9100']
