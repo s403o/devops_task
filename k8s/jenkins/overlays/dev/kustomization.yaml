@@ -1,0 +1,11 @@
+bases:
+  - ../../base
+
+resources:
+  - ingress.yaml
+  - serviceAccount.yaml
+  - volume.yaml
+
+namespace: jenkins
+
+
