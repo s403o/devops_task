@@ -1,0 +1,10 @@
+# replicaCount: 2
+
+# image:
+#   repository: s403o/flaskapp
+#   pullPolicy: IfNotPresent
+
+# service:
+#   name: flask-app
+#   type: ClusterIP
+#   port: 5000
