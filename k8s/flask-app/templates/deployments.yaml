@@ -29,7 +29,7 @@ spec:
           protocol: TCP
         envFrom:
         - configMapRef:
-          name: flask-app-config
+            name: flask-app-config
         lifecycle:
           preStop:
             exec:
@@ -67,7 +67,7 @@ spec:
           protocol: TCP
         envFrom:
         - configMapRef:
-          name: flask-app-config
+            name: flask-app-config
         volumeMounts:
         - name: mongodb-data
           mountPath: /data/db
@@ -104,7 +104,7 @@ spec:
           protocol: TCP
         envFrom:
         - configMapRef:
-          name: flask-app-config
+            name: flask-app-config
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -131,8 +131,8 @@ spec:
         imagePullPolicy: IfNotPresent
         args:
         - "--config.file=/etc/prometheus/prometheus.yml"
-        - "-web.enable-lifecycle"
-        - "-web.external-url=http://0.0.0.0:9090/prometheus"
+        - "--web.enable-lifecycle"
+        - "--web.external-url=http://0.0.0.0:9090/prometheus"
         ports:
         - containerPort: 9090
           name: prometheus-port
