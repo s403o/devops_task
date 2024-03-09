@@ -1,73 +1,47 @@
-apiVersion: networking.istio.io/v1alpha3
-kind: Gateway
-metadata:
-  name: ingress-gateway
-spec:
-  selector:
-    istio: ingressgateway
-  servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - "*"
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: flask-app-ingress
 spec:
-  hosts:
-  - "*"
-  gateways:
-  - ingress-gateway
-  http:
-  - match:
-    - uri:
-        prefix: /flaskapp
-    rewrite:
-      uri: /
-    route:
-    - destination:
-        host: flaskapp.flask-app.svc.cluster.local
-        port:
-          number: 80
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/flaskapp"
+        backend:
+          service:
+            name: flaskapp
+            port:
+              number: 80
 ---
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: grafana-ingress
 spec:
-  hosts:
-  - "*"
-  gateways:
-  - ingress-gateway
-  http:
-  - match:
-    - uri:
-        prefix: /grafana
-    route:
-    - destination:
-        host: grafana.flask-app.svc.cluster.local
-        port:
-          number: 80
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/grafana"
+        backend:
+          service:
+            name: grafana
+            port:
+              number: 80
 ---
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: prometheus-ingress
 spec:
-  hosts:
-  - "*"
-  gateways:
-  - ingress-gateway
-  http:
-  - match:
-    - uri:
-        prefix: /prometheus
-    route:
-    - destination:
-        host: prometheus.flask-app.svc.cluster.local
-        port:
-          number: 80
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/prometheus"
+        backend:
+          service:
+            name: prometheus
+            port:
+              number: 80
