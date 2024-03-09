@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: flask-app-ingress
+  namespace: flask-app
 spec:
   rules:
   - http:
@@ -18,6 +19,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: grafana-ingress
+  namespace: flask-app
 spec:
   rules:
   - http:
@@ -34,6 +36,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: prometheus-ingress
+  namespace: flask-app
 spec:
   rules:
   - http:

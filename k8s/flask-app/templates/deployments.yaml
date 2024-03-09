@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flask-app
+  namespace: flask-app
   labels:
     app.kubernetes.io/name: flask-app
     log-format: json
@@ -42,6 +43,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongodb
+  namespace: flask-app
   labels:
     app.kubernetes.io/name: mongodb
     log-format: json
@@ -79,6 +81,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana
+  namespace: flask-app
   labels:
     app.kubernetes.io/name: grafana
     log-format: json
@@ -110,6 +113,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus
+  namespace: flask-app
   labels:
     app.kubernetes.io/name: prometheus
     log-format: json
@@ -150,6 +154,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: node-exporter
+  namespace: flask-app
   labels:
     app.kubernetes.io/name: node-exporter
 spec:
