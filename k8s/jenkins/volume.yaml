@@ -1,6 +1,8 @@
 apiVersion: storage.k8s.io/v1
+kind: StorageClass
 metadata:
   name: local-storage
+  namespace: jenkins
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
 
@@ -9,18 +11,19 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: jenkins-pv-volume
+  namespace: jenkins
   labels:
     type: local
 spec:
   storageClassName: local-storage
   claimRef:
     name: jenkins-pv-claim
-    capacity:
-      storage: 2Gi
-      accessModes:
-        - ReadWriteOnce
-      local:
-        path: /mnt/data
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: /mnt/data
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -35,10 +38,11 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: jenkins-pv-claim
+  namespace: jenkins
 spec:
   storageClassName: local-storage
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 2Gi
