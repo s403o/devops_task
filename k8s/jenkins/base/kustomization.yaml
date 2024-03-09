@@ -6,8 +6,5 @@ namespace: jenkins
 resources:
 - deployment.yaml
 - service.yaml
-- ingress.yaml
 - namespace.yaml
-- serviceAccount.yaml
-- service.yaml
-- volume.yaml
+

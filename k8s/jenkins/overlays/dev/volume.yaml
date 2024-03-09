@@ -31,7 +31,8 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - node01
+            - node01
+            - controlplane
 
 ---
 apiVersion: v1
